@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diffuri", "DifferentialEquations_Lab1\Diffuri.csproj", "{4432E87D-B3D9-4AEB-B50B-8415DD26ECCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diffuri2", "Diffuri2\Diffuri2.csproj", "{3B2E42B1-41B9-4FAD-ADAA-387169766811}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4432E87D-B3D9-4AEB-B50B-8415DD26ECCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4432E87D-B3D9-4AEB-B50B-8415DD26ECCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4432E87D-B3D9-4AEB-B50B-8415DD26ECCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4432E87D-B3D9-4AEB-B50B-8415DD26ECCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2E42B1-41B9-4FAD-ADAA-387169766811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2E42B1-41B9-4FAD-ADAA-387169766811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2E42B1-41B9-4FAD-ADAA-387169766811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2E42B1-41B9-4FAD-ADAA-387169766811}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FEDC9BCD-FD0D-47AF-A880-58CE98D54C62}
+	EndGlobalSection
+EndGlobal
