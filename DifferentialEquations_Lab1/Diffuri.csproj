@@ -7,8 +7,8 @@
     <ProjectGuid>{4432E87D-B3D9-4AEB-B50B-8415DD26ECCC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DifferentialEquations_Lab1</RootNamespace>
-    <AssemblyName>DifferentialEquations_Lab1</AssemblyName>
+    <RootNamespace>Diffuri</RootNamespace>
+    <AssemblyName>Diffuri</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -70,6 +70,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
