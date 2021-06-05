@@ -56,10 +56,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart1.BorderlineWidth = 5;
-            chartArea1.AxisX.Maximum = 2D;
-            chartArea1.AxisX.Minimum = 1D;
-            chartArea1.AxisY.Maximum = 2D;
-            chartArea1.AxisY.Minimum = 0.1D;
+            chartArea1.AxisX.Maximum = 1D;
+            chartArea1.AxisX.Minimum = 0D;
             chartArea1.CursorX.Interval = 1E-06D;
             chartArea1.CursorX.IsUserEnabled = true;
             chartArea1.CursorX.IsUserSelectionEnabled = true;

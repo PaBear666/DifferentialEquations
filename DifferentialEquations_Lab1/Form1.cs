@@ -46,10 +46,10 @@ namespace Diffuri
             }
             for (int i = 0; i < n; i++)
             {
-                #region
-                dataGridView1.Rows[i].Cells[2].Value = i != 0 ? Eiler[i].Y - 0.08 : Eiler[i].Y;
-                dataGridView1.Rows[i].Cells[3].Value = i != 0 ? RungeKutta[i].Y + 0.0002 : RungeKutta[i].Y;
-                #endregion
+                //#region
+                //dataGridView1.Rows[i].Cells[2].Value = i != 0 ? Eiler[i].Y - 0.08 : Eiler[i].Y;
+                //dataGridView1.Rows[i].Cells[3].Value = i != 0 ? RungeKutta[i].Y + 0.0002 : RungeKutta[i].Y;
+                //#endregion
                 dataGridView1.Rows[i].Cells[4].Value = Math.Abs((double)dataGridView1.Rows[i].Cells[1].Value - (double)dataGridView1.Rows[i].Cells[2].Value);
                 dataGridView1.Rows[i].Cells[5].Value = Math.Abs((double)dataGridView1.Rows[i].Cells[1].Value - (double)dataGridView1.Rows[i].Cells[3].Value);
             }
@@ -70,8 +70,8 @@ namespace Diffuri
 
         public void StartProgram()
         {
-            double h0 = 0.1;
-            Contoller controller = new Contoller(1,2,1,0.5,Math.Pow(h0,4),h0);
+            double h0 = 0.001;
+            Contoller controller = new Contoller(0,1,0,1,Math.Pow(h0,4),h0);
             PointD[] Exact_Solution = controller.Exact_Solution();
             PointD[] Eiler = controller.Eiler();
             PointD[] RungeKutta = controller.RungeKutta(controller.B, controller.H);       

@@ -30,7 +30,7 @@ namespace Diffuri
 
         public double MainFunction(double x, double y)
         {
-            return ((2 * Math.Pow(y,2) * Math.Log(x)) - y) / x;
+            return 4 * (Math.Pow(x, 3) + 1) * Math.Exp(-4 * x) * Math.Pow(y, 2) - 4 * Math.Pow(x, 3) * y;
             
         }
 
@@ -47,7 +47,7 @@ namespace Diffuri
                 }
                 else
                 {
-                    h0 *= 2;
+                    h0 /= 2;
                     condition = true;
                 }
             } while (condition);
@@ -65,7 +65,7 @@ namespace Diffuri
             for (int i = 0; i <= N; i++)
             {
                 points[i].X = A + i * H;
-                points[i].Y = (1 / (2 * Math.Log(points[i].X) + 2));
+                points[i].Y = Math.Exp(4*points[i].X);//(1 / (2 * Math.Log(points[i].X) + 2));
               
             }
             return points;
@@ -104,11 +104,11 @@ namespace Diffuri
             {
                 points[i].X = A + h * i;
                 double f1 = MainFunction(points[i - 1].X, points[i - 1].Y);
-                double f2 = MainFunction(points[i - 1].X + (double)(h / 2), points[i - 1].Y + (h * f1 / 2));
-                double f3 = MainFunction(points[i - 1].X + (double)(h / 2), points[i - 1].Y + (h*f2 / 2));
+                double f2 = MainFunction(points[i - 1].X + (double)(h / 2.0), points[i - 1].Y + (h * f1 / 2.0));
+                double f3 = MainFunction(points[i - 1].X + (double)(h / 2.0), points[i - 1].Y + (h*f2 / 2.0));
                 double f4 = MainFunction(points[i - 1].X + h, points[i - 1].Y + h*f3);
 
-                points[i].Y = points[i - 1].Y + h * (double)(f1 + 2 * f2 + 2 * f3 + f4) / 6;
+                points[i].Y = points[i - 1].Y + h * (double)(f1 + 2 * f2 + 2 * f3 + f4) / 6.0;
             }
             return points;
         }

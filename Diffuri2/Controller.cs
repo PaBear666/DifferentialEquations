@@ -32,13 +32,15 @@ namespace Diffuri2
 
         private double GetExactSolution(double x)
         {
-            return 2 * Math.Exp(2 * x) + (-1.3) * x * Math.Exp(2 * x) + (1 / 36 * Math.Exp(2*x) * Math.Sin(6*x));  
+            double c1 = 1.0 / 24.0;
+            double c2 = (96 + 2*Math.Sin(1)-14*Math.Sin(7)+21*Math.Cos(7)) / (48 * Math.Cos(1));
+            return c1 * Math.Cos(x) + c2 * Math.Sin(x) - 1.0 / 16.0 * Math.Sin(7 * x) - 1.0 / 24.0 * Math.Cos(7 * x);
         }
 
         private double GetFunctionResult(double x)
         {
             x = Math.Round(x, 4);
-            return -Math.Exp(2 * x) * Math.Sin(6 * x);
+            return 2*Math.Cos(7*x)+3*Math.Sin(7*x);
         }
 
         private double[,] GetMatrix()

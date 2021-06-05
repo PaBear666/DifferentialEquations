@@ -17,7 +17,7 @@ namespace Diffuri2
         public View()
         {
             InitializeComponent();
-            controller = new Controller(0, 1, 10, 2, 4, -4, 2);
+            controller = new Controller(0, 1, 10, 0, 1, 0, 2);
             PointD[] gridMethod = controller.GetResultGridMethod();
             PointD[] exactSolution = controller.GetPointDExactSolution();
             DrawGraphic(gridMethod, exactSolution);
@@ -35,7 +35,7 @@ namespace Diffuri2
         }
         public void FillTable(PointD[] gridMethod, PointD[] exactSolution)
         {
-            var controller2H = new Controller(0, 1, 5, 2, 4, -4, 2);
+            var controller2H = new Controller(0, 1, 5, 0, 1, 0, 2);
             var esp = Controller.GetEspRunge(gridMethod, controller2H.GetResultGridMethod());
             table1.Rows.Add(gridMethod.Length);
             for (int i = 0; i < gridMethod.Length; i++)
