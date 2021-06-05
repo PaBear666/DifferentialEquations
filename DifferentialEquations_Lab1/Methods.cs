@@ -6,41 +6,43 @@ using ZedGraph;
 
 namespace Diffuri
 {
-    public class Contoller
+    public class Methods
     {
         public double A { get; private set; }
         public double B { get; private set; }
         public double X0 { get; private set; }
         public double Y0 { get; private set; }
         public double Eps { get; private set; }
-
         public double H { get; private set; }
-
         public int N { get; private set; }
-        public Contoller(double a,double b,double x0,double y0,double eps,double h0)
+        public Methods(double a, double b, double x0, double y0, double eps, double h0)
         {
             A = a;
             B = b;
             X0 = x0;
             Y0 = y0;
             Eps = eps;
-            H = CalcStep(h0);
+            H = CalcH(h0);
             N = (int)Math.Round((B - A) / H);
         }
 
         public double MainFunction(double x, double y)
         {
             return 4 * (Math.Pow(x, 3) + 1) * Math.Exp(-4 * x) * Math.Pow(y, 2) - 4 * Math.Pow(x, 3) * y;
-            
         }
 
-        public double CalcStep(double h0)
+        public double AnaliticSolutin(double x)
+        {
+            return Math.Exp(4 * x);
+        }
+        
+        public double CalcH(double h0)
         {
             bool condition;
             do
             {
-                double y2 = RungeKutta(A + 2*h0, h0).Last().Y;
-                double y3 = RungeKutta(A + 2*h0, 2*h0).Last().Y;
+                double y2 = CalcRungeKutta(A + 2*h0, h0).Last().Y;
+                double y3 = CalcRungeKutta(A + 2*h0, 2*h0).Last().Y;
                 if (Math.Abs((double)(y2 - y3)) < Eps) 
                 {
                     condition = false;
@@ -59,18 +61,17 @@ namespace Diffuri
             }
             return h0;
         }
-        public PointD[] Exact_Solution()
+        public PointD[] CalcAnalitikSolution()
         {
             PointD[] points = new PointD[N + 1];
             for (int i = 0; i <= N; i++)
             {
                 points[i].X = A + i * H;
-                points[i].Y = Math.Exp(4*points[i].X);//(1 / (2 * Math.Log(points[i].X) + 2));
-              
+                points[i].Y = AnaliticSolutin(points[i].X);     
             }
             return points;
         }
-        public PointD[] Eiler()
+        public PointD[] CalcEiler()
         {
             PointD[] points = new PointD[N + 1];
             double x0 = 0;
@@ -93,8 +94,7 @@ namespace Diffuri
             }
             return points;
         }
-
-        public PointD[] RungeKutta(double x, double h)
+        public PointD[] CalcRungeKutta(double x, double h)
         {
             int n = (int)Math.Round((x - A) / h);
             PointD[] points = new PointD[n+1];

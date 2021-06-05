@@ -43,20 +43,21 @@ namespace Diffuri2
             return 2*Math.Cos(7*x)+3*Math.Sin(7*x);
         }
 
-        private double[,] GetMatrix()
+        private double[] GetVector()
         {
-            double[,] matrix = new double[N + 1, N + 1];
-            for (int i = 1; i < N; i++)
+            double[] vector = new double[3*(N-1) + 4];
+            vector[0] = 1;
+            vector[1] = 0;
+            for (int i = 3; i < 3*N; i += 3)
             {
-                    matrix[i, i] = -(2 - H * H * Q);
-                    matrix[i, i - 1] = 1 - (H / 2 * P);
-                    matrix[i, i + 1] = 1 + (H / 2 * P);
+                vector[i - 1] = 1 - (H / 2 * P);
+                vector[i] = -(2 - H * H * Q);
+                vector[i + 1] = 1 + (H / 2 * P);
             }
-            matrix[0, 0] = 1;
-            matrix[N, N] =  1 / H;
-            matrix[N, N - 1] = -1 / H;
-
-            return matrix;
+            // (y[N+1]-y[N])/H = Y1 Краевое условие
+            vector[3 * N - 1] = -1 / H;
+            vector[3 * N] = 1 / H;
+            return vector;
         }
 
         private double[] GetFunctionArray(double[] xk)
@@ -71,9 +72,9 @@ namespace Diffuri2
             return fk;
         }
 
-        private double[] GetResultSweepMethod(double[,] matrix ,double[] fk)
+        private double[] GetResultSweepMethod(double[] vector, double[] fk)
         {
-            
+
             double[] b = new double[N + 1];
             double[] z = new double[N + 1];
             for (int k = 0; k < N + 1; k++)
@@ -84,24 +85,24 @@ namespace Diffuri2
 
                 if (k.Equals(0))
                 {
-                    ak = matrix[k, k + 1];
-                    bk = matrix[k, k];
-                    b[0] = - (ak / bk);
+                    ak = vector[k + 1];
+                    bk = vector[k];
+                    b[0] = -(ak / bk);
                     z[0] = fk[k] / bk;
                 }
                 else if (k.Equals(N))
                 {
-                     bk = matrix[k, k];
-                     ck = matrix[k, k - 1];
+                    bk = vector[3*k];
+                    ck = vector[3*k - 1];
                     b[k] = 0;
                     z[k] = (fk[k] - ck * z[k - 1]) / (bk + ck * b[k - 1]);
                 }
                 else
                 {
-                     bk = matrix[k, k];
-                     ck = matrix[k, k - 1];
-                     ak = matrix[k, k + 1];
-                    b[k] = -(ak/ (bk + ck * b[k-1]));
+                    bk = vector[3*k];
+                    ck = vector[3*k - 1];
+                    ak = vector[3*k + 1];
+                    b[k] = -(ak / (bk + ck * b[k - 1]));
                     z[k] = (fk[k] - ck * z[k - 1]) / (bk + ck * b[k - 1]);
                 }
 
@@ -130,8 +131,8 @@ namespace Diffuri2
                 xk[k] = Math.Round(A + H * k,3);               
             }
             double[] fk = GetFunctionArray(xk);
-            double[,] matrix = GetMatrix();
-            double[] resultY = GetResultSweepMethod(matrix, fk);
+            double[] vector = GetVector();
+            double[] resultY = GetResultSweepMethod(vector, fk);
             PointD[] result = new PointD[N + 1];
             for (int k = 0; k < N + 1; k++)
             {
