@@ -1,6 +1,6 @@
 ﻿namespace Diffuri2
 {
-    partial class View
+    partial class Okno
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.table1 = new System.Windows.Forms.DataGridView();
             this.ColumnX = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,28 +43,31 @@
             this.ColumnError = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnMaxError = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnRunge = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.grid2H = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // chart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart.Legends.Add(legend3);
             this.chart.Location = new System.Drawing.Point(29, 13);
             this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "ExactSolution";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "GridSoltion";
-            this.chart.Series.Add(series1);
-            this.chart.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "Аналитическое решение";
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.Name = "Сеточное решение";
+            this.chart.Series.Add(series4);
+            this.chart.Series.Add(series5);
             this.chart.Size = new System.Drawing.Size(703, 505);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart1";
@@ -75,7 +81,8 @@
             this.ColumnGrid,
             this.ColumnError,
             this.ColumnMaxError,
-            this.ColumnRunge});
+            this.ColumnRunge,
+            this.grid2H});
             this.table1.Location = new System.Drawing.Point(752, 12);
             this.table1.Name = "table1";
             this.table1.Size = new System.Drawing.Size(655, 304);
@@ -88,41 +95,65 @@
             // 
             // ColumnExact
             // 
-            this.ColumnExact.HeaderText = "ExactSolution";
+            this.ColumnExact.HeaderText = "Аналитическое";
             this.ColumnExact.Name = "ColumnExact";
             // 
             // ColumnGrid
             // 
-            this.ColumnGrid.HeaderText = "GridSolution";
+            this.ColumnGrid.HeaderText = "Сеточный ";
             this.ColumnGrid.Name = "ColumnGrid";
             // 
             // ColumnError
             // 
-            this.ColumnError.HeaderText = "Error";
+            this.ColumnError.HeaderText = "Погрешность";
             this.ColumnError.Name = "ColumnError";
             // 
             // ColumnMaxError
             // 
-            this.ColumnMaxError.HeaderText = "MaxError";
+            this.ColumnMaxError.HeaderText = "Максимальная погрешность";
             this.ColumnMaxError.Name = "ColumnMaxError";
             // 
             // ColumnRunge
             // 
-            this.ColumnRunge.HeaderText = "Runge";
+            this.ColumnRunge.HeaderText = "Рунге";
             this.ColumnRunge.Name = "ColumnRunge";
+            // 
+            // chart1
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
+            this.chart1.Location = new System.Drawing.Point(752, 338);
+            this.chart1.Name = "chart1";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Legend = "Legend1";
+            series6.Name = "Погрешность";
+            this.chart1.Series.Add(series6);
+            this.chart1.Size = new System.Drawing.Size(655, 290);
+            this.chart1.TabIndex = 2;
+            this.chart1.Text = "chart1";
+            // 
+            // grid2H
+            // 
+            this.grid2H.HeaderText = "Сеточный 2H";
+            this.grid2H.Name = "grid2H";
+            this.grid2H.ReadOnly = true;
             // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1419, 640);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.table1);
             this.Controls.Add(this.chart);
             this.Name = "View";
             this.Text = "View";
-            this.Load += new System.EventHandler(this.View_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -137,5 +168,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnError;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnMaxError;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnRunge;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn grid2H;
     }
 }
