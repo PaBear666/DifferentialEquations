@@ -7,71 +7,73 @@ using ZedGraph;
 
 namespace Diffuri2
 {
-    class Controller
+    class Methods
     {
         public double A { get; private set; }
         public double B { get; private set; }
-        public double H { get; private set; }
         public int N { get; private set; }
-        public int P { get; private set; }
-        public int Q { get; private set; }
-        public int Y0 { get; private set; }
-        public int Y1 { get; private set; }
+        public int Pparametr { get; private set; }
+        public int Qparametr { get; private set; }
+        public int Value1 { get; private set; }
+        public int Value2 { get; private set; }
+        public double H { get; private set; }
 
-        public Controller(double a, double b, int n, int y0, int q, int p, int y1)
+        public Methods(double a, double b, double h, int value1, int q, int p, int value2)
         {
             A = a;
             B = b;
-            N = n;
-            H = (B - A) / N;
-            Y0 = y0;
-            Q = q;
-            P = p;
-            Y1 = y1;
+            H = h;
+            N = (int)((B - A) / H);
+            Value1 = value1;
+            Qparametr = q;
+            Pparametr = p;
+            Value2 = value2;
         }
 
-        private double GetExactSolution(double x)
+        private double Analitic(double x)
         {
-            return 2 * Math.Exp(2 * x) + (-1.3) * x * Math.Exp(2 * x) + (1 / 36 * Math.Exp(2*x) * Math.Sin(6*x));  
+            double c1 = 1.0 / 24.0;
+            double c2 = (96 + 2*Math.Sin(1)-14*Math.Sin(7)+21*Math.Cos(7)) / (48 * Math.Cos(1));
+            return c1 * Math.Cos(x) + c2 * Math.Sin(x) - 1.0 / 16.0 * Math.Sin(7 * x) - 1.0 / 24.0 * Math.Cos(7 * x);
         }
 
-        private double GetFunctionResult(double x)
+        private double RightFunction(double x)
         {
             x = Math.Round(x, 4);
-            return -Math.Exp(2 * x) * Math.Sin(6 * x);
+            return 2*Math.Cos(7*x)+3*Math.Sin(7*x);
         }
-
-        private double[,] GetMatrix()
+        private double[] Vector()
         {
-            double[,] matrix = new double[N + 1, N + 1];
-            for (int i = 1; i < N; i++)
+            double[] vector = new double[3*(N-1) + 4];
+            vector[0] = 1;
+            vector[1] = 0;
+            // (y[N+1]-y[N])/H = Y1 Краевое условие
+            vector[3 * N - 1] = -1 / H;
+            vector[3 * N] = 1 / H;
+            for (int i = 3; i < 3*N; i += 3)
             {
-                    matrix[i, i] = -(2 - H * H * Q);
-                    matrix[i, i - 1] = 1 - (H / 2 * P);
-                    matrix[i, i + 1] = 1 + (H / 2 * P);
-            }
-            matrix[0, 0] = 1;
-            matrix[N, N] =  1 / H;
-            matrix[N, N - 1] = -1 / H;
-
-            return matrix;
+                vector[i - 1] = 1 - (H / 2 * Pparametr);
+                vector[i] = -(2 - H * H * Qparametr);
+                vector[i + 1] = 1 + (H / 2 * Pparametr);
+            }          
+            return vector;
         }
 
-        private double[] GetFunctionArray(double[] xk)
+        private double[] FunctionArray(double[] x)
         {
-            double[] fk = new double[N + 1];
+            double[] f = new double[N + 1];
             for (int k = 1; k < N; k++)
             {
-                fk[k] = GetFunctionResult(xk[k]) * H * H;
+                f[k] = RightFunction(x[k]) * H * H;
             }
-            fk[0] = Y0;
-            fk[N] = Y1;
-            return fk;
+            f[0] = Value1;
+            f[N] = Value2;
+            return f;
         }
 
-        private double[] GetResultSweepMethod(double[,] matrix ,double[] fk)
+        private double[] Progonka(double[] vector, double[] fk)
         {
-            
+
             double[] b = new double[N + 1];
             double[] z = new double[N + 1];
             for (int k = 0; k < N + 1; k++)
@@ -82,24 +84,24 @@ namespace Diffuri2
 
                 if (k.Equals(0))
                 {
-                    ak = matrix[k, k + 1];
-                    bk = matrix[k, k];
-                    b[0] = - (ak / bk);
+                    ak = vector[k + 1];
+                    bk = vector[k];
+                    b[0] = -(ak / bk);
                     z[0] = fk[k] / bk;
                 }
                 else if (k.Equals(N))
                 {
-                     bk = matrix[k, k];
-                     ck = matrix[k, k - 1];
+                    bk = vector[3*k];
+                    ck = vector[3*k - 1];
                     b[k] = 0;
                     z[k] = (fk[k] - ck * z[k - 1]) / (bk + ck * b[k - 1]);
                 }
                 else
                 {
-                     bk = matrix[k, k];
-                     ck = matrix[k, k - 1];
-                     ak = matrix[k, k + 1];
-                    b[k] = -(ak/ (bk + ck * b[k-1]));
+                    bk = vector[3*k];
+                    ck = vector[3*k - 1];
+                    ak = vector[3*k + 1];
+                    b[k] = -(ak / (bk + ck * b[k - 1]));
                     z[k] = (fk[k] - ck * z[k - 1]) / (bk + ck * b[k - 1]);
                 }
 
@@ -119,7 +121,7 @@ namespace Diffuri2
             return y;
         }
 
-        public PointD[] GetResultGridMethod()
+        public PointD[] GridMethod()
         {
             double[] xk = new double[N + 1];
             
@@ -127,9 +129,9 @@ namespace Diffuri2
             {
                 xk[k] = Math.Round(A + H * k,3);               
             }
-            double[] fk = GetFunctionArray(xk);
-            double[,] matrix = GetMatrix();
-            double[] resultY = GetResultSweepMethod(matrix, fk);
+            double[] fk = FunctionArray(xk);
+            double[] vector = Vector();
+            double[] resultY = Progonka(vector, fk);
             PointD[] result = new PointD[N + 1];
             for (int k = 0; k < N + 1; k++)
             {
@@ -138,28 +140,32 @@ namespace Diffuri2
             }
             return result;
         }
-        public PointD[] GetPointDExactSolution()
+        public PointD[] AnaliticSolution()
         {
             double[] xk = new double[N + 1];
             PointD[] result = new PointD[N + 1];
             for (int k = 0; k < N + 1; k++)
             {
                 result[k].X = Math.Round(A + H * k, 3);
-                result[k].Y = GetExactSolution(result[k].X);
+                result[k].Y = Analitic(result[k].X);
             }
             return result;
         }
-        static public double[] GetEspRunge(PointD[] Grid1H,PointD[]Grid2H,int p = 1)
+        static public double[] EpsRunge(Methods m0)
         {
-            double[] esp = new double[Grid1H.Length];
+            int p = 1;
+            Methods m1 = Methods.Create2H(m0);
+            var m0Grid = m0.GridMethod();
+            var m1Grid = m1.GridMethod();
+            double[] esp = new double[m0Grid.Length];
             for (int i = 0; i < esp.Length; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    esp[i] = (Grid1H[i].Y - Grid2H[i/2].Y) / (Math.Pow(2, p) - 1);
-                }
-            }
+                esp[i] = i % 2 == 0 ? (m0Grid[i].Y - m1Grid[i/2].Y) / (Math.Pow(2, p) - 1) : 0;
             return esp;
+        }
+
+        static public Methods Create2H(Methods methods)
+        {
+            return new Methods(methods.A, methods.B, methods.H * 2, methods.Value1, methods.Qparametr, methods.Pparametr, methods.Value2);
         }
 
         
